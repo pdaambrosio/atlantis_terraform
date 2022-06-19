@@ -14,7 +14,7 @@ variable "security_group_id" {
 }
 
 variable "user_data" {
-  default = "script.sh"
+  default = ""
 }
 
 variable "prefix" {

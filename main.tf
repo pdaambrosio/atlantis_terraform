@@ -51,7 +51,6 @@ module "ec2" {
   subnet_id                   = module.vpc.subnet_id
   security_group_id           = module.security_group.security_group_id
   associate_public_ip_address = true
-  user_data                   = "./scripts/user_data.sh"
 }
 
 module "elastic_load_balance" {
