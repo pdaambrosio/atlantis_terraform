@@ -2,11 +2,11 @@ variable "aws_vpc_id" {
   default = "vpc-0a0a0a0a0a0a0a"
 }
 
-variable "cidr_private_subnet" {
+variable "cidr_public_subnet" {
   default = "10.0.1.0/24"
 }
 
-variable "private_subnet_name" {
+variable "public_subnet_name" {
   default = "instace_subnet"
 }
 
