@@ -9,9 +9,10 @@ data "aws_ssm_parameter" "igw_id" {
 module "public_subnets" {
   source              = "./modules/public_subnets"
   aws_vpc_id          = data.aws_ssm_parameter.vpc_id.value
-  private_subnet_name = "webapps_subnet"
+  public_subnet_name = "webapps_subnet"
   igw_name            = "webapps_igw"
   internet_gateway_id = data.aws_ssm_parameter.igw_id.value
+  cidr_public_subnet  = "10.1.20.0/24"
 }
 
 module "security_group" {
