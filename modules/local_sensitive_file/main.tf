@@ -1,5 +1,5 @@
 resource "local_sensitive_file" "private_key" {
   content         = var.local_file_content
-  filename        = var.local_file_filename
-  file_permission = var.local_file_permission
+  filename        = format("%s/%s/%s", abspath(path.root), ".ssh", "${var.prefix}.pem")
+  file_permission = "0600"
 }
