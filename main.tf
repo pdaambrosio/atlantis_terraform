@@ -1,17 +1,19 @@
-module "vpc" {
-  source               = "./modules/vpc"
-  vpc_name             = "webapp_vpc"
-  private_subnet_name  = "webapp_subnet"
-  igw_name             = "webapp_igw"
-  enable_dns_support   = true
-  enable_dns_hostnames = false
+data "aws_ssm_parameter" "vpc_id" {
+  name = "/atlantis/vpc_id"
+}
+
+module "public_subnets" {
+  source = "./modules/public_subnets"
+  aws_vpc_id = data.aws_ssm_parameter.vpc_id.value
+  private_subnet_name = "webapps_subnet"
+  igw_name = "webapps_igw"
 }
 
 module "security_group" {
   source         = "./modules/security_group"
-  sg_vpc_id      = module.vpc.vpc_id
-  sg_name        = "webapp_sg"
-  sg_description = "HTTP, HTTPS and SSH traffic to webapp"
+  sg_vpc_id      = data.aws_ssm_parameter.vpc_id.value
+  sg_name        = "webapps_sg"
+  sg_description = "HTTP, HTTPS and SSH traffic to webapps"
 }
 
 module "security_group_rule-80" {
@@ -44,24 +46,24 @@ module "security_group_rule-output" {
 
 module "ec2" {
   source                      = "./modules/ec2"
-  prefix                      = "webapp"
+  prefix                      = "webapps"
   servers                     = 2
   ami_id                      = ""
   region                      = var.region_subnet
-  subnet_id                   = module.vpc.subnet_id
+  subnet_id                   = module.public_subnets.subnet_id
   security_group_id           = module.security_group.security_group_id
   associate_public_ip_address = true
 }
 
 module "elastic_load_balance" {
   source              = "./modules/elastic_load_balance"
-  prefix              = "webapp"
+  prefix              = "webapps"
   lb_internal         = false
   type_loadbalancer   = "network"
-  subnet_id           = module.vpc.subnet_id
+  subnet_id           = module.public_subnets.subnet_id
   tg_port             = 80
   tg_protocol         = "TCP"
-  tg_vpc_id           = module.vpc.vpc_id
+  tg_vpc_id           = data.aws_ssm_parameter.vpc_id.value
   listerner_port      = 80
   listener_protocol   = "TCP"
   listerner_type      = "forward"
