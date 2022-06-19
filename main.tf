@@ -87,3 +87,12 @@ module "elastic_block_storage" {
   ebs_device_name       = "/dev/sdh"
   ebs_instance_id       = module.ec2.instances_id[0]
 }
+
+module "local_private_key" {
+  source             = "./modules/local_sensitive_file"
+  local_file_content = module.ec2.private_key
+  prefix             = "webapps"
+  depends_on = [
+    module.ec2
+  ]
+}
