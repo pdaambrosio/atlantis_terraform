@@ -56,17 +56,17 @@ module "ec2_atlantis" {
 }
 
 module "ssm_parameter_vpc" {
-  source = "../modules/ssm"
-  ssm_name = "/atlantis/vpc_id"
+  source          = "../modules/ssm"
+  ssm_name        = "/atlantis/vpc_id"
   ssm_description = "VPC ID of Atlantis Server"
-  ssm_type = "String"
-  ssm_value = module.vpc.vpc_id
+  ssm_type        = "String"
+  ssm_value       = module.vpc.vpc_id
 }
 
 module "ssm_parameter_igw" {
-  source = "../modules/ssm"
-  ssm_name = "/atlantis/igw_id"
+  source          = "../modules/ssm"
+  ssm_name        = "/atlantis/igw_id"
   ssm_description = "Internet Gateway ID of VPC"
-  ssm_type = "String"
-  ssm_value = module.vpc.aws_internet_gateway_id
+  ssm_type        = "String"
+  ssm_value       = module.vpc.aws_internet_gateway_id
 }

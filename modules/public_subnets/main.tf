@@ -17,7 +17,7 @@ resource "aws_subnet" "public_subnet" {
 # }
 
 resource "aws_route_table" "route_table_instances" {
-  vpc_id     = var.aws_vpc_id
+  vpc_id = var.aws_vpc_id
 
   route {
     cidr_block = "0.0.0.0/0"

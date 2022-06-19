@@ -2,11 +2,16 @@ data "aws_ssm_parameter" "vpc_id" {
   name = "/atlantis/vpc_id"
 }
 
+data "aws_ssm_parameter" "igw_id" {
+  name = "/atlantis/igw_id"
+}
+
 module "public_subnets" {
-  source = "./modules/public_subnets"
-  aws_vpc_id = data.aws_ssm_parameter.vpc_id.value
+  source              = "./modules/public_subnets"
+  aws_vpc_id          = data.aws_ssm_parameter.vpc_id.value
   private_subnet_name = "webapps_subnet"
-  igw_name = "webapps_igw"
+  igw_name            = "webapps_igw"
+  internet_gateway_id = data.aws_ssm_parameter.igw_id.value
 }
 
 module "security_group" {

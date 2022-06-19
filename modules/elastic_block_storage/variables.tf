@@ -19,7 +19,7 @@ variable "ebs_iops" {
 }
 
 variable "ebs_device_name" {
- default = "/dev/sdh"
+  default = "/dev/sdh"
 }
 
 variable "ebs_instance_id" {
