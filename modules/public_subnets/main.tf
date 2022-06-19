@@ -8,21 +8,20 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-resource "aws_internet_gateway" "igw_instances" {
-  vpc_id     = var.aws_vpc_id
+# resource "aws_internet_gateway" "igw_instances" {
+#   vpc_id     = var.aws_vpc_id
 
-  tags = {
-    Name = var.igw_name
-  }
-}
+#   tags = {
+#     Name = var.igw_name
+#   }
+# }
 
 resource "aws_route_table" "route_table_instances" {
   vpc_id     = var.aws_vpc_id
-  depends_on = [aws_internet_gateway.igw_instances]
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw_instances.id
+    gateway_id = var.internet_gateway_id
   }
 }
 

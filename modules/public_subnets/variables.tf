@@ -25,3 +25,7 @@ variable "enable_dns_support" {
 variable "enable_dns_hostnames" {
   default = true
 }
+
+variable "internet_gateway_id" {
+  default = "igw-0a0a0a0a0a0a0a"
+}

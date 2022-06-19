@@ -31,7 +31,7 @@ module "security_group_rule-22" {
   sg_from_rule_port   = "22"
   sg_to_rule_port     = "22"
   sg_rule_protocol    = "tcp"
-  sg_rule_cidr_blocks = ["201.69.232.217/32"]
+  sg_rule_cidr_blocks = ["187.56.220.160/32"]
 }
 
 module "security_group_rule-output" {
@@ -61,4 +61,12 @@ module "ssm_parameter" {
   ssm_description = "VPC ID of Atlantis Server"
   ssm_type = "String"
   ssm_value = module.vpc.vpc_id
+}
+
+module "ssm_parameter_igw" {
+  source = "../modules/ssm"
+  ssm_name = "/atlantis/igw_id"
+  ssm_description = "Internet Gateway ID of VPC"
+  ssm_type = "String"
+  ssm_value = module.vpc.aws_internet_gateway_id
 }
