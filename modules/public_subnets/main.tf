@@ -1,10 +1,10 @@
-resource "aws_subnet" "private_subnet" {
+resource "aws_subnet" "public_subnet" {
   vpc_id                  = var.aws_vpc_id
-  cidr_block              = var.cidr_private_subnet
+  cidr_block              = var.cidr_public_subnet
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
   tags = {
-    Name = var.private_subnet_name
+    Name = var.public_subnet_name
   }
 }
 
@@ -27,7 +27,7 @@ resource "aws_route_table" "route_table_instances" {
 }
 
 resource "aws_route_table_association" "associate_igw" {
-  subnet_id      = aws_subnet.private_subnet.id
+  subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.route_table_instances.id
   depends_on     = [aws_route_table.route_table_instances]
 }
