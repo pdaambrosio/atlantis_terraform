@@ -54,3 +54,11 @@ module "ec2_atlantis" {
   associate_public_ip_address = true
   user_data                   = "../scripts/atlantis.sh"
 }
+
+module "ssm_parameter" {
+  source = "../modules/ssm"
+  ssm_name = "/atlantis/vpc_id"
+  ssm_description = "VPC ID of Atlantis Server"
+  ssm_type = "String"
+  ssm_value = module.vpc.vpc_id
+}
