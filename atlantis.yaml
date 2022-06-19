@@ -1,0 +1,32 @@
+version: 3
+projects:
+- name: deploy-aws
+  dir: .
+  autoplan:
+    enabled: true
+  workflow: deploy
+
+- name: destroy-aws
+  dir: .
+  autoplan:
+    enabled: false
+  workflow: destroy
+
+workflows:
+  deploy:
+    plan:
+      steps:
+      - init
+      - plan
+    apply:
+      steps:
+      - apply
+
+  destroy:
+    plan:
+      steps:
+      - plan:
+          extra_args: ["-destroy"]
+    apply:
+      steps:
+      - apply
