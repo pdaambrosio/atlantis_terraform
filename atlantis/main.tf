@@ -55,7 +55,7 @@ module "ec2_atlantis" {
   user_data                   = "../scripts/atlantis.sh"
 }
 
-module "ssm_parameter" {
+module "ssm_parameter_vpc" {
   source = "../modules/ssm"
   ssm_name = "/atlantis/vpc_id"
   ssm_description = "VPC ID of Atlantis Server"
