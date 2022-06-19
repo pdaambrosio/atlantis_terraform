@@ -1,11 +1,13 @@
 version: 3
 projects:
 - name: deploy-aws
+  dir: .
   autoplan:
     enabled: true
   workflow: deploy
 
 - name: destroy-aws
+  dir: .
   autoplan:
     enabled: false
   workflow: destroy
