@@ -17,7 +17,7 @@ variable "subnet_id" {
 variable "tg_port" {
   default = 80
 }
-  
+
 variable "tg_protocol" {
   default = "TCP"
 }
