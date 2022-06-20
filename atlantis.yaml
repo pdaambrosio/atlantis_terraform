@@ -7,12 +7,12 @@ projects:
     enabled: true
   workflow: deploy
 
-- name: destroy-aws
-  dir: .
-  workspace: atlantis-lab
-  autoplan:
-    enabled: false
-  workflow: destroy
+# - name: destroy-aws
+#   dir: .
+#   workspace: atlantis-lab
+#   autoplan:
+#     enabled: false
+#   workflow: destroy
 
 workflows:
   deploy:
