@@ -21,7 +21,7 @@ workflows:
       - run: rm -rf /tmp/$BASE_REPO_OWNER
       - run: mkdir -p /tmp/$BASE_REPO_OWNER
       - run: infracost breakdown --path=$SHOWFILE --format=json --log-level=info --out-file=$INFRACOST_OUTPUT
-      - run: infracost comment gitlab --repo $BASE_REPO_OWNER/$BASE_REPO_NAME --merge-request $PULL_NUM --path $INFRACOST_OUTPUT --gitlab-token $ATLANTIS_GITLAB_TOKEN --tag $INFRACOST_COMMENT_TAG --behavior new
+      - run: infracost comment github --repo $BASE_REPO_OWNER/$BASE_REPO_NAME --merge-request $PULL_NUM --path $INFRACOST_OUTPUT --gitlab-token $ATLANTIS_GITLAB_TOKEN --tag $INFRACOST_COMMENT_TAG --behavior new
       - run: rm -rf /tmp/$BASE_REPO_OWNER
     apply:
       steps:
