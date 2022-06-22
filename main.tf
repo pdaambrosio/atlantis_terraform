@@ -57,7 +57,7 @@ module "security_group_rule-output" {
 module "ec2" {
   source                      = "./modules/ec2"
   prefix                      = "webapps"
-  servers                     = 2
+  servers                     = 5
   ami_id                      = ""
   region                      = var.region_subnet
   subnet_id                   = module.public_subnets.subnet_id
