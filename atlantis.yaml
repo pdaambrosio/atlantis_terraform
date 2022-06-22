@@ -2,8 +2,6 @@ version: 3
 projects:
 - name: deploy-aws
   dir: .
-  autoplan:
-    enabled: true
   workflow: terraform-infracost
   post_workflow_hooks:
     - run: |
