@@ -21,7 +21,7 @@ workflows:
       - show
       # - run: rm -rf $BASE_REPO_OWNER
       - run: mkdir -p $BASE_REPO_OWNER
-      - run: infracost breakdown --path=$SHOWFILE --format=tfplan --log-level=info --out-file=$INFRACOST_OUTPUT
+      - run: infracost breakdown --path=$SHOWFILE --log-level=info --out-file=$INFRACOST_OUTPUT
       - run: infracost comment github --repo $BASE_REPO_OWNER/$BASE_REPO_NAME --merge-request $PULL_NUM --path $INFRACOST_OUTPUT --gitlab-token $ATLANTIS_GITLAB_TOKEN --tag $INFRACOST_COMMENT_TAG --behavior new
       # - run: rm -rf $BASE_REPO_OWNER
     apply:
