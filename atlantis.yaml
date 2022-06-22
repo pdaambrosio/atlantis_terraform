@@ -18,6 +18,7 @@ workflows:
           command: 'echo "$BASE_REPO_OWNER/$BASE_REPO_NAME/$REPO_REL_DIR-infracost.tfplan"'
       - init
       - plan
+      - show
       # - run: rm -rf $BASE_REPO_OWNER
       - run: mkdir -p $BASE_REPO_OWNER
       - run: infracost breakdown --path=$SHOWFILE --format=tfplan --log-level=info --out-file=$INFRACOST_OUTPUT
