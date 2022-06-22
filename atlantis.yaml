@@ -15,7 +15,7 @@ workflows:
           command: 'echo "$REPO_REL_DIR-infracost.json"'
       - env:
           name: INFRACOST_COMMENT_TAG
-          command: 'echo "$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM-$WORKSPACE-${REPO_REL_DIR//\//-}"'
+          command: 'echo "$REPO_REL_DIR-infracost.json"'
       - init
       - plan
       - run: rm -rf $BASE_REPO_OWNER
