@@ -19,11 +19,11 @@ workflows:
       - init
       - plan
       - show
-      - run: rm -rf $BASE_REPO_OWNER
-      - run: mkdir -p $BASE_REPO_OWNER
+      - run: rm -rf /tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM
+      - run: mkdir -p /tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM
       - run: infracost breakdown --path=$SHOWFILE --log-level=info --out-file=$INFRACOST_OUTPUT
       - run: infracost comment github --repo $BASE_REPO_OWNER/$BASE_REPO_NAME --pull-request $PULL_NUM --path $INFRACOST_OUTPUT --github-token $ATLANTIS_GITLAB_TOKEN --tag $INFRACOST_COMMENT_TAG --behavior new
-      - run: rm -rf $BASE_REPO_OWNER
+      - run: rm -rf /tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM
     apply:
       steps:
       - apply
