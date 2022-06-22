@@ -1,34 +1,34 @@
-version: 3
-projects:
-- name: deploy-aws
-  dir: .
-  # workspace: atlantis-lab
-  autoplan:
-    enabled: true
-  workflow: deploy
-
-# - name: destroy-aws
+# version: 3
+# projects:
+# - name: deploy-aws
 #   dir: .
-#   workspace: atlantis-lab
+#   # workspace: atlantis-lab
 #   autoplan:
-#     enabled: false
-#   workflow: destroy
+#     enabled: true
+#   workflow: deploy
 
-workflows:
-  deploy:
-    plan:
-      steps:
-      - init
-      - plan
-    apply:
-      steps:
-      - apply
+# # - name: destroy-aws
+# #   dir: .
+# #   workspace: atlantis-lab
+# #   autoplan:
+# #     enabled: false
+# #   workflow: destroy
 
-  # destroy:
-  #   plan:
-  #     steps:
-  #     - plan:
-  #         extra_args: ["-destroy"]
-  #   apply:
-  #     steps:
-  #     - apply
+# workflows:
+#   deploy:
+#     plan:
+#       steps:
+#       - init
+#       - plan
+#     apply:
+#       steps:
+#       - apply
+
+#   # destroy:
+#   #   plan:
+#   #     steps:
+#   #     - plan:
+#   #         extra_args: ["-destroy"]
+#   #   apply:
+#   #     steps:
+#   #     - apply
