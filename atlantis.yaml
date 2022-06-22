@@ -12,10 +12,10 @@ workflows:
       steps:
       - env:
           name: INFRACOST_OUTPUT
-          command: 'echo "$BASE_REPO_OWNER/$BASE_REPO_NAME/$REPO_REL_DIR-infracost.tfplan"'
+          command: 'echo "$BASE_REPO_OWNER/$BASE_REPO_NAME/$REPO_REL_DIR-infracost.json"'
       - env:
           name: INFRACOST_COMMENT_TAG
-          command: 'echo "$BASE_REPO_OWNER/$BASE_REPO_NAME/$REPO_REL_DIR-infracost.tfplan"'
+          command: 'echo "$BASE_REPO_OWNER/$BASE_REPO_NAME/$REPO_REL_DIR-infracost.json"'
       - init
       - plan
       - show
