@@ -2,33 +2,28 @@ version: 3
 projects:
 - name: deploy-aws
   dir: .
-  workspace: atlantis-lab
   autoplan:
     enabled: true
   workflow: deploy
-
-# - name: destroy-aws
-#   dir: .
-#   workspace: atlantis-lab
-#   autoplan:
-#     enabled: false
-#   workflow: destroy
 
 workflows:
   deploy:
     plan:
       steps:
+      - env:
+          name: INFRACOST_OUTPUT
+          command: 'echo "/tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM/$WORKSPACE-aws-infracost.json"'
+      - env:
+          name: INFRACOST_COMMENT_TAG
+          command: 'echo "/tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM/$WORKSPACE-aws-infracost.json"'
       - init
       - plan
+      - show
+      - run: rm -rf /tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM
+      - run: mkdir -p /tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM
+      - run: infracost breakdown --path=$SHOWFILE --log-level=info --out-file=$INFRACOST_OUTPUT --format json
+      - run: infracost comment github --repo $BASE_REPO_OWNER/$BASE_REPO_NAME --pull-request $PULL_NUM --path $INFRACOST_OUTPUT --github-token $GITHUB_TOKEN --tag $INFRACOST_COMMENT_TAG --behavior new
+      - run: rm -rf /tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM
     apply:
       steps:
       - apply
-
-  # destroy:
-  #   plan:
-  #     steps:
-  #     - plan:
-  #         extra_args: ["-destroy"]
-  #   apply:
-  #     steps:
-  #     - apply

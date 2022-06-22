@@ -1,3 +1,8 @@
+# provider "aws" {
+#   region  = var.region
+#   profile = var.profile
+# }
+
 terraform {
   required_providers {
     aws = {
@@ -8,5 +13,5 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.region
+  region = var.region
 }
