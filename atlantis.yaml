@@ -12,17 +12,17 @@ workflows:
       steps:
       - env:
           name: INFRACOST_OUTPUT
-          command: 'echo "$REPO_REL_DIR-infracost.json"'
+          command: 'echo "$BASE_REPO_OWNER/$BASE_REPO_NAME/$REPO_REL_DIR-infracost.json"'
       - env:
           name: INFRACOST_COMMENT_TAG
-          command: 'echo "$REPO_REL_DIR-infracost.json"'
+          command: 'echo "$BASE_REPO_OWNER/$BASE_REPO_NAME/$REPO_REL_DIR-infracost.json"'
       - init
       - plan
-      - run: rm -rf $BASE_REPO_OWNER
+      # - run: rm -rf $BASE_REPO_OWNER
       - run: mkdir -p $BASE_REPO_OWNER
       - run: infracost breakdown --path=$SHOWFILE --format=json --log-level=info --out-file=$INFRACOST_OUTPUT
       - run: infracost comment github --repo $BASE_REPO_OWNER/$BASE_REPO_NAME --merge-request $PULL_NUM --path $INFRACOST_OUTPUT --gitlab-token $ATLANTIS_GITLAB_TOKEN --tag $INFRACOST_COMMENT_TAG --behavior new
-      - run: rm -rf $BASE_REPO_OWNER
+      # - run: rm -rf $BASE_REPO_OWNER
     apply:
       steps:
       - apply
