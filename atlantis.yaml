@@ -2,7 +2,7 @@ version: 3
 projects:
 - name: deploy-aws
   dir: .
-  workspace: atlantis-lab
+  # workspace: atlantis-lab
   autoplan:
     enabled: true
   workflow: deploy
