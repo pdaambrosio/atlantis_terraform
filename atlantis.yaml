@@ -5,7 +5,6 @@ projects:
   autoplan:
     enabled: true
   workflow: deploy_aws
-
 # Deploy_AWS
   deploy_aws:
     plan:
