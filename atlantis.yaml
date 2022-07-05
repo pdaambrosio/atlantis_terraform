@@ -4,10 +4,10 @@ projects:
   dir: .
   autoplan:
     enabled: true
-  workflow: deploy
+  workflow: deploy_aws
 
-workflows:
-  deploy:
+# Deploy_AWS
+  deploy_aws:
     plan:
       steps:
       - env:
@@ -24,6 +24,19 @@ workflows:
       - run: infracost breakdown --path=$SHOWFILE --log-level=info --out-file=$INFRACOST_OUTPUT --format json
       - run: infracost comment github --repo $BASE_REPO_OWNER/$BASE_REPO_NAME --pull-request $PULL_NUM --path $INFRACOST_OUTPUT --github-token $GITHUB_TOKEN --tag $INFRACOST_COMMENT_TAG --behavior new
       - run: rm -rf /tmp/$BASE_REPO_OWNER-$BASE_REPO_NAME-$PULL_NUM
+    apply:
+      steps:
+      - apply
+      - run: sh /home/ubuntu/ansible/atualiza_ansible_aws.sh
+      - run: ansible-playbook -i /home/ubuntu/ansible/aws_ec2.yaml /home/ubuntu/ansible/known_hosts.yml
+      - run: ansible-playbook -i /home/ubuntu/ansible/aws_ec2.yaml -e ansible_python_interpreter=/usr/bin/python /home/ubuntu/ansible/http-playbook.yml
+# Terraform_Destroy
+  destroy:
+    plan:
+      steps:
+      - init
+      - plan:
+          extra_args: ["-destroy"]
     apply:
       steps:
       - apply

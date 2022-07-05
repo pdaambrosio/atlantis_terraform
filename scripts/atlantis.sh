@@ -13,3 +13,4 @@ sudo apt-get update && sudo apt-get install terraform
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 sudo apt install python3-pip -y
 pip install boto3
+curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh |sudo sh
