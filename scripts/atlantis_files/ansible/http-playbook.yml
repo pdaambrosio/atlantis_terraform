@@ -1,0 +1,40 @@
+---
+- name: httpd install
+  hosts: webapps_*
+  user: ec2-user
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: "/home/ubuntu/.ssh/webapps.pem"
+  tasks:
+    - package:
+        name: httpd
+        state: present
+
+
+- name: httpd start
+  hosts: webapps_*
+  user: ec2-user
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: "/home/ubuntu/.ssh/webapps.pem"
+  tasks:
+    - service:
+        name: httpd
+        state: started
+
+
+- name: config index.html
+  hosts: webapps_*
+  user: ec2-user
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: "/home/ubuntu/.ssh/webapps.pem"
+  tasks:
+    - copy:
+        dest: /var/www/html/index.html
+        content: |
+           <div style="text-align: center;"><img class="logo" src="https://www.vaggon.com.br/uploads/parceiro/250_02052019_211240.png"></div>
+           <div style="text-align: center;"><img class="center" src="https://www.nozominetworks.com/wp-content/uploads/2021/08/telefonica-tech-logo.png"></div>
+           <h1><center>Virtual Machine generated with Terraform - Git - Atlantis</center></h1>
+           <h1><center>Telefonica Tech - CCoE - Arquitetura e Engenharia</center></h1>
+           <h1><center>Servidor: {{ ansible_nodename }}</center></h1>
