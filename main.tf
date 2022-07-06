@@ -45,6 +45,16 @@ module "security_group_rule-atlantis" {
   source_security_group_id = data.aws_ssm_parameter.sg_id.value
 }
 
+module "security_group_rule-atlantis" {
+  source                   = "./modules/security_group_rules"
+  sg_rule_id               = module.security_group.security_group_id
+  sg_rule_type             = "ingress"
+  sg_from_rule_port        = "0"
+  sg_to_rule_port          = "65535"
+  sg_rule_protocol         = "-1"
+  source_security_group_id = data.aws_ssm_parameter.sg_id.value
+}
+
 module "security_group_rule-output" {
   source            = "./modules/security_group_rules"
   sg_rule_id        = module.security_group.security_group_id

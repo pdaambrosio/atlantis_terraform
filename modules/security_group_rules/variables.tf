@@ -19,5 +19,9 @@ variable "sg_rule_protocol" {
 }
 
 variable "sg_rule_cidr_blocks" {
-  default = ["0.0.0.0/0"]
+  default = null
+}
+
+variable "source_security_group_id" {
+  default = null
 }
