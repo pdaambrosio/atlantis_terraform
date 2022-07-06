@@ -1,3 +1,15 @@
+module "s3" {
+  source      = "../modules/s3_bucket"
+  bucket_name = "atlantis-s3-files"
+  acl         = "private"
+  filename    = "../scripts/atlantis_files"
+  tags = {
+    "Name"        = "atlantis-s3-files",
+    "Environment" = "dev",
+    "Project"     = "atlantis"
+  }
+}
+
 module "vpc" {
   source                  = "../modules/vpc"
   vpc_name                = "atlantis_vpc"
@@ -16,12 +28,12 @@ module "security_group" {
 }
 
 module "security_group_rule-4141" {
-  source            = "../modules/security_group_rules"
-  sg_rule_id        = module.security_group.security_group_id
-  sg_rule_type      = "ingress"
-  sg_from_rule_port = "4141"
-  sg_to_rule_port   = "4141"
-  sg_rule_protocol  = "tcp"
+  source              = "../modules/security_group_rules"
+  sg_rule_id          = module.security_group.security_group_id
+  sg_rule_type        = "ingress"
+  sg_from_rule_port   = "4141"
+  sg_to_rule_port     = "4141"
+  sg_rule_protocol    = "tcp"
   sg_rule_cidr_blocks = ["0.0.0.0/0"]
 }
 
@@ -54,6 +66,9 @@ module "ec2_atlantis" {
   security_group_id           = module.security_group.security_group_id
   associate_public_ip_address = true
   user_data                   = "../scripts/atlantis.sh"
+  depends_on = [
+    module.s3
+  ]
 }
 
 module "ssm_parameter_vpc" {
