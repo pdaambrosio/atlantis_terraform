@@ -1,0 +1,11 @@
+---
+# versions
+terragrunt_atlantis_config_version: 1.14.2
+terragrunt_version: v0.38.4
+
+# urls
+atlantis_url: https://github.com/runatlantis/atlantis/releases/download/v0.19.3/atlantis_linux_amd64.zip
+infracost_url: https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh
+hashicorp_gpg_key: https://apt.releases.hashicorp.com/gpg
+terragrunt_config_url: https://github.com/transcend-io/terragrunt-atlantis-config/releases/download/v{{ terragrunt_atlantis_config_version }}/terragrunt-atlantis-config_{{ terragrunt_atlantis_config_version }}_linux_amd64.tar.gz
+terragrunt_url: https://github.com/gruntwork-io/terragrunt/releases/download/{{ terragrunt_version }}/terragrunt_linux_amd64

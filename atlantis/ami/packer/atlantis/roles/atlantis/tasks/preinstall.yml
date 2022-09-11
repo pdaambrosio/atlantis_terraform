@@ -1,0 +1,16 @@
+---
+- name: Install packages
+  shell: sudo apt update
+
+- name: Install Ubuntu packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - curl
+    - unzip
+    - gnupg
+    - software-properties-common
+    - build-essential
+    - python-pip

@@ -1,12 +1,10 @@
-module "s3" {
-  source      = "../modules/s3_bucket"
-  bucket_name = "atlantis-s3-files"
-  acl         = "private"
-  filename    = "../scripts/atlantis_files"
-  tags = {
-    "Name"        = "atlantis-s3-files",
-    "Environment" = "dev",
-    "Project"     = "atlantis"
+data "aws_ami" "atlantis" {
+  most_recent = true
+  owners      = ["self"]
+  name_regex  = "^atlantis-.*$"
+  filter {
+    name   = "tag:Environment"
+    values = ["IAC"]
   }
 }
 
@@ -28,12 +26,12 @@ module "security_group" {
 }
 
 module "security_group_rule-4141" {
-  source              = "../modules/security_group_rules"
-  sg_rule_id          = module.security_group.security_group_id
-  sg_rule_type        = "ingress"
-  sg_from_rule_port   = "4141"
-  sg_to_rule_port     = "4141"
-  sg_rule_protocol    = "tcp"
+  source            = "../modules/security_group_rules"
+  sg_rule_id        = module.security_group.security_group_id
+  sg_rule_type      = "ingress"
+  sg_from_rule_port = "4141"
+  sg_to_rule_port   = "4141"
+  sg_rule_protocol  = "tcp"
   sg_rule_cidr_blocks = ["0.0.0.0/0"]
 }
 
@@ -44,7 +42,7 @@ module "security_group_rule-22" {
   sg_from_rule_port   = "22"
   sg_to_rule_port     = "22"
   sg_rule_protocol    = "tcp"
-  sg_rule_cidr_blocks = ["201.8.154.210/32"]
+  sg_rule_cidr_blocks = ["201.69.243.138/32"]
 }
 
 module "security_group_rule-output" {
@@ -59,16 +57,12 @@ module "security_group_rule-output" {
 module "ec2_atlantis" {
   source                      = "../modules/ec2"
   region                      = var.region_subnet
-  ami_id                      = "ami-09d56f8956ab235b3"
+  ami_id                      = data.aws_ami.atlantis.id
   prefix                      = "atlantis_server"
   servers                     = 1
   subnet_id                   = module.vpc.subnet_id
   security_group_id           = module.security_group.security_group_id
   associate_public_ip_address = true
-  user_data                   = "../scripts/atlantis.sh"
-  depends_on = [
-    module.s3
-  ]
 }
 
 module "ssm_parameter_vpc" {

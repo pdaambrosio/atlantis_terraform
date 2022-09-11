@@ -35,6 +35,5 @@ resource "aws_instance" "instance_ec2" {
   associate_public_ip_address = var.associate_public_ip_address
 
   tags = {
-    Name = "${var.prefix}-${count.index + 1}"
-  }
+  Name = "${var.prefix}-${count.index + 1}" }
 }

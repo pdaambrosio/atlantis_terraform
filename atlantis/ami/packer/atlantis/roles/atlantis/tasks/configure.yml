@@ -1,0 +1,46 @@
+---
+- name: Configure repo Ansible
+  shell: sudo add-apt-repository --yes --update ppa:ansible/ansible
+
+- name: Config key Terraform
+  shell: curl -fsSL {{ hashicorp_gpg_key }} | sudo apt-key add -
+
+- name: Config repo Terraform
+  shell: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+  notify: Update Ubuntu
+
+- name: Download terragrunt-atlantis-config
+  shell: wget {{ terragrunt_config_url }}
+
+- name: Extract terragrunt-atlantis-config
+  shell: sudo tar xf terragrunt-atlantis-config_{{ terragrunt_atlantis_config_version }}_linux_amd64.tar.gz
+
+- name: Move terragrunt-atlantis-config
+  shell: sudo mv terragrunt-atlantis-config_{{ terragrunt_atlantis_config_version }}_linux_amd64/terragrunt-atlantis-config_{{ terragrunt_atlantis_config_version }}_linux_amd64 terragrunt-atlantis-config
+
+- name: Download Terragrunt
+  shell: wget {{ terragrunt_url }}
+
+- name: Copying Atlantis file
+  copy:
+    src: repos.yaml
+    dest: /home/ubuntu/
+    owner: ubuntu
+    group: ubuntu
+    mode: 0644
+
+- name: Copying Ansible files
+  copy:
+    src: ansible
+    dest: /home/ubuntu/
+    owner: ubuntu
+    group: ubuntu
+    mode: 0644
+
+- name: Copying environment variables
+  copy:
+    src: atlantis_setup.sh
+    dest: /etc/profile.d/
+    owner: root
+    group: root
+    mode: 0644

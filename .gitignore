@@ -114,3 +114,6 @@ dist
 .terraform*
 terraform.tfstate*
 *.tfstate
+
+# sensitive
+atlantis_setup.sh
