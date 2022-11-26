@@ -9,24 +9,24 @@ data "aws_ami" "atlantis" {
 }
 
 module "vpc" {
-  source                  = "../modules/vpc"
+  source                  = "git@github.com:pdaambrosio/module_vpc_public_subnet_aws.git"
   vpc_name                = "atlantis_vpc"
-  private_subnet_name     = "atlantis_subnet"
+  public_subnet_name      = "atlantis_subnet"
   igw_name                = "atlantis_igw"
   vpc_cidr                = "10.1.0.0/16"
-  cidr_private_subnet     = "10.1.10.0/24"
+  cidr_public_subnet      = "10.1.10.0/24"
   map_public_ip_on_launch = true
 }
 
 module "security_group" {
-  source         = "../modules/security_group"
+  source         = "git@github.com:pdaambrosio/module_security_group_aws.git"
   sg_vpc_id      = module.vpc.vpc_id
   sg_name        = "atlantis_sg"
   sg_description = "SSH traffic and 4141 to atlantis"
 }
 
 module "security_group_rule-4141" {
-  source            = "../modules/security_group_rules"
+  source            = "git@github.com:pdaambrosio/module_security_group_rules_aws.git"
   sg_rule_id        = module.security_group.security_group_id
   sg_rule_type      = "ingress"
   sg_from_rule_port = "4141"
@@ -36,7 +36,7 @@ module "security_group_rule-4141" {
 }
 
 module "security_group_rule-22" {
-  source              = "../modules/security_group_rules"
+  source              = "git@github.com:pdaambrosio/module_security_group_rules_aws.git"
   sg_rule_id          = module.security_group.security_group_id
   sg_rule_type        = "ingress"
   sg_from_rule_port   = "22"
@@ -46,7 +46,7 @@ module "security_group_rule-22" {
 }
 
 module "security_group_rule-output" {
-  source            = "../modules/security_group_rules"
+  source            = "git@github.com:pdaambrosio/module_security_group_rules_aws.git"
   sg_rule_id        = module.security_group.security_group_id
   sg_rule_type      = "egress"
   sg_from_rule_port = "0"
@@ -55,8 +55,7 @@ module "security_group_rule-output" {
 }
 
 module "ec2_atlantis" {
-  source                      = "../modules/ec2"
-  region                      = var.region_subnet
+  source                      = "git@github.com:pdaambrosio/module_ec2_aws.git"
   ami_id                      = data.aws_ami.atlantis.id
   prefix                      = "atlantis_server"
   servers                     = 1
@@ -66,7 +65,7 @@ module "ec2_atlantis" {
 }
 
 module "ssm_parameter_vpc" {
-  source          = "../modules/ssm"
+  source          = "git@github.com:pdaambrosio/module_ssm_parameter_store_aws.git"
   ssm_name        = "/atlantis/vpc_id"
   ssm_description = "VPC ID of Atlantis Server"
   ssm_type        = "String"
@@ -74,7 +73,7 @@ module "ssm_parameter_vpc" {
 }
 
 module "ssm_parameter_igw" {
-  source          = "../modules/ssm"
+  source          = "git@github.com:pdaambrosio/module_ssm_parameter_store_aws.git"
   ssm_name        = "/atlantis/igw_id"
   ssm_description = "Internet Gateway ID of VPC"
   ssm_type        = "String"
@@ -82,7 +81,7 @@ module "ssm_parameter_igw" {
 }
 
 module "ssm_parameter_sg" {
-  source          = "../modules/ssm"
+  source          = "git@github.com:pdaambrosio/module_ssm_parameter_store_aws.git"
   ssm_name        = "/atlantis/sg_id"
   ssm_description = "Security group ID of Atlantis Server"
   ssm_type        = "String"
