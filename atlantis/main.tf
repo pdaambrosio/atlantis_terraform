@@ -57,6 +57,7 @@ module "security_group_rule-output" {
 module "ec2_atlantis" {
   source                      = "git@github.com:pdaambrosio/module_ec2_aws.git"
   ami_id                      = data.aws_ami.atlantis.id
+  instance_type               = "c3.large"
   prefix                      = "atlantis_server"
   servers                     = 1
   subnet_id                   = module.vpc.subnet_id
