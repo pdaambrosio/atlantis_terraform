@@ -1,0 +1,16 @@
+{
+  "builds": [
+    {
+      "name": "atlantis",
+      "builder_type": "amazon-ebs",
+      "build_time": 1669504805,
+      "files": null,
+      "artifact_id": "us-east-1:ami-0951ecf564d741e1f",
+      "packer_run_uuid": "ebee0518-e96e-c57b-6309-1220e6c972db",
+      "custom_data": {
+        "source_ami_name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20221117"
+      }
+    }
+  ],
+  "last_run_uuid": "ebee0518-e96e-c57b-6309-1220e6c972db"
+}
