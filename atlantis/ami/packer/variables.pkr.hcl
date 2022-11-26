@@ -16,12 +16,6 @@ variable "environment" {
   default     = "IAC"
 }
 
-// variable "type" {
-//   type        = string
-//   description = "Type of the resource"
-//   sensitive   = true
-// }
-
 variable "instance_type" {
   type        = string
   description = "Instance type"
