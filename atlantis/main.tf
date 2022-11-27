@@ -95,6 +95,6 @@ module "local_private_key" {
   prefix             = "atlantis"
   user_path          = "/home/kali-user/"
   depends_on = [
-    module.ec2
+    module.ec2_atlantis
   ]
 }
