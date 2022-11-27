@@ -11,7 +11,7 @@ data "aws_ssm_parameter" "sg_id" {
 }
 
 module "public_subnets" {
-  source              = "./modules/public_subnets"
+  source              = "git@github.com:pdaambrosio/module_public_subnet_aws.git"
   aws_vpc_id          = data.aws_ssm_parameter.vpc_id.value
   public_subnet_name  = "webapps_subnet"
   igw_name            = "webapps_igw"
@@ -20,14 +20,14 @@ module "public_subnets" {
 }
 
 module "security_group" {
-  source         = "./modules/security_group"
+  source         = "git@github.com:pdaambrosio/module_security_group_aws.git"
   sg_vpc_id      = data.aws_ssm_parameter.vpc_id.value
   sg_name        = "webapps_sg"
   sg_description = "HTTP, HTTPS and SSH traffic to webapps"
 }
 
 module "security_group_rule-80" {
-  source            = "./modules/security_group_rules"
+  source            = "git@github.com:pdaambrosio/module_security_group_rules_aws.git"
   sg_rule_id        = module.security_group.security_group_id
   sg_rule_type      = "ingress"
   sg_from_rule_port = "80"
@@ -36,7 +36,7 @@ module "security_group_rule-80" {
 }
 
 module "security_group_rule-atlantis" {
-  source                   = "./modules/security_group_rules_sgid"
+  source                   = "git@github.com:pdaambrosio/module_security_group_rules_sgid_aws.git"
   sg_rule_id               = module.security_group.security_group_id
   sg_rule_type             = "ingress"
   sg_from_rule_port        = "0"
@@ -46,7 +46,7 @@ module "security_group_rule-atlantis" {
 }
 
 module "security_group_rule-output" {
-  source            = "./modules/security_group_rules"
+  source            = "git@github.com:pdaambrosio/module_security_group_rules_aws.git"
   sg_rule_id        = module.security_group.security_group_id
   sg_rule_type      = "egress"
   sg_from_rule_port = "0"
@@ -55,7 +55,7 @@ module "security_group_rule-output" {
 }
 
 module "ec2" {
-  source                      = "./modules/ec2"
+  source                      = "git@github.com:pdaambrosio/module_ec2_aws.git"
   prefix                      = "webapps"
   servers                     = 3
   ami_id                      = ""
@@ -66,7 +66,7 @@ module "ec2" {
 }
 
 module "elastic_load_balance" {
-  source              = "./modules/elastic_load_balance"
+  source              = "git@github.com:pdaambrosio/module_elb_aws.git"
   prefix              = "webapps"
   lb_internal         = false
   type_loadbalancer   = "network"
@@ -83,9 +83,9 @@ module "elastic_load_balance" {
 }
 
 module "elastic_block_storage" {
-  source                = "./modules/elastic_block_storage"
+  source                = "git@github.com:pdaambrosio/module_ebs_aws.git"
   ebs_availability_zone = module.ec2.availability_zone[0]
-  ebs_size              = 8
+  ebs_size              = 20
   ebs_type              = "gp2"
   ebs_iops              = 0
   ebs_device_name       = "/dev/sdh"
@@ -93,9 +93,10 @@ module "elastic_block_storage" {
 }
 
 module "local_private_key" {
-  source             = "./modules/local_sensitive_file"
+  source             = "git@github.com:pdaambrosio/module_local_sensitive_file_aws.git"
   local_file_content = module.ec2.private_key
   prefix             = "webapps"
+  user_path          = "/home/kali-user/"
   depends_on = [
     module.ec2
   ]

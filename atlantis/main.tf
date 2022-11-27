@@ -88,3 +88,13 @@ module "ssm_parameter_sg" {
   ssm_type        = "String"
   ssm_value       = module.security_group.security_group_id
 }
+
+module "local_private_key" {
+  source             = "git@github.com:pdaambrosio/module_local_sensitive_file_aws.git"
+  local_file_content = module.ec2_atlantis.private_key
+  prefix             = "atlantis"
+  user_path          = "/home/kali-user/"
+  depends_on = [
+    module.ec2
+  ]
+}
