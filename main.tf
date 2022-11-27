@@ -17,6 +17,9 @@ module "public_subnets" {
   igw_name            = "webapps_igw"
   internet_gateway_id = data.aws_ssm_parameter.igw_id.value
   cidr_public_subnet  = "10.1.20.0/24"
+  extra_tags = {
+    Name = "webapps_subnet_public"
+  }
 }
 
 module "security_group" {
@@ -37,7 +40,7 @@ module "security_group_rule-80" {
 
 module "security_group_rule-atlantis" {
   source                   = "git@github.com:pdaambrosio/module_security_group_rules_sgid_aws.git"
-  sg_rule_id               = module.security_group.security_group_id
+  security_group_id        = module.security_group.security_group_id
   sg_rule_type             = "ingress"
   sg_from_rule_port        = "0"
   sg_to_rule_port          = "65535"
@@ -59,7 +62,6 @@ module "ec2" {
   prefix                      = "webapps"
   servers                     = 3
   ami_id                      = ""
-  region                      = var.region_subnet
   subnet_id                   = module.public_subnets.subnet_id
   security_group_id           = module.security_group.security_group_id
   associate_public_ip_address = true
