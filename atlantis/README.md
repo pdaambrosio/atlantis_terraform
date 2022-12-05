@@ -2,12 +2,12 @@
 
 This directory utilize external Terraform modules to provision Atlantis in an AWS account with Infracost and Ansible. The modules used are:
 
-- [module_vpc_public_subnet_aws](git@github.com:pdaambrosio/module_vpc_public_subnet_aws.git)
-- [module_security_group_aws](git@github.com:pdaambrosio/module_security_group_aws.git)
-- [module_security_group_rules_aws](git@github.com:pdaambrosio/module_security_group_rules_aws.git")
-- [module_ec2_aws](git@github.com:pdaambrosio/module_ec2_aws.git)
-- [module_ssm_parameter_store_aws](git@github.com:pdaambrosio/module_ssm_parameter_store_aws.git)
-- [module_local_sensitive_file_aws](git@github.com:pdaambrosio/module_local_sensitive_file_aws.git)
+- [module_vpc_public_subnet_aws](https://github.com/pdaambrosio/module_vpc_public_subnet_aws)
+- [module_security_group_aws](https://github.com/pdaambrosio/module_security_group_aws)
+- [module_security_group_rules_aws](https://github.com/pdaambrosio/module_security_group_rules_aws")
+- [module_ec2_aws](https://github.com/pdaambrosio/module_ec2_aws)
+- [module_ssm_parameter_store_aws](https://github.com/pdaambrosio/module_ssm_parameter_store_aws)
+- [module_local_sensitive_file_aws](https://github.com/pdaambrosio/module_local_sensitive_file_aws)
 
 The image is provisionized with [Packer](https://www.packer.io/), and the Ansible playbook is located in the [ansible](./ansible) directory.
 
