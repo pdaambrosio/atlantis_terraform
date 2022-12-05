@@ -4,7 +4,7 @@ This directory utilize external Terraform modules to provision Atlantis in an AW
 
 - [module_vpc_public_subnet_aws](https://github.com/pdaambrosio/module_vpc_public_subnet_aws)
 - [module_security_group_aws](https://github.com/pdaambrosio/module_security_group_aws)
-- [module_security_group_rules_aws](https://github.com/pdaambrosio/module_security_group_rules_aws")
+- [module_security_group_rules_aws](https://github.com/pdaambrosio/module_security_group_rules_aws)
 - [module_ec2_aws](https://github.com/pdaambrosio/module_ec2_aws)
 - [module_ssm_parameter_store_aws](https://github.com/pdaambrosio/module_ssm_parameter_store_aws)
 - [module_local_sensitive_file_aws](https://github.com/pdaambrosio/module_local_sensitive_file_aws)
