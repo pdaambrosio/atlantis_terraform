@@ -59,7 +59,8 @@ The Packer template is located in the [ami](./ami) directory. You need to run th
 packer build .
 ```
 
-This command will build the image and save it in the AWS account.
+This command will build the image and save it in the AWS account. You can check the image in the AWS console.
+The Terraform code will use this image to provision the EC2 instance.
 
 ### Terraform
 
