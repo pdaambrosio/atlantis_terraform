@@ -9,7 +9,7 @@ This directory utilize external Terraform modules to provision Atlantis in an AW
 - [module_ssm_parameter_store_aws](https://github.com/pdaambrosio/module_ssm_parameter_store_aws)
 - [module_local_sensitive_file_aws](https://github.com/pdaambrosio/module_local_sensitive_file_aws)
 
-The image is provisionized with [Packer](https://www.packer.io/), and the Ansible playbook is located in the [ansible](./ansible) directory.
+The image is provisionized with [Packer](https://www.packer.io/), and the Ansible playbook is located in the [ansible](./ami/packer/ansible) directory.
 
 ## Prerequisites
 
@@ -53,7 +53,7 @@ In the future, I will refactor this code to save the credentials in the SSM para
 
 ### Packer
 
-The Packer template is located in the [ami](./ami) directory. You need to run the following command to build the image:
+The Packer template is located in the [ami](./ami/packer) directory. You need to run the following command to build the image:
 
 ```bash
 packer build .
